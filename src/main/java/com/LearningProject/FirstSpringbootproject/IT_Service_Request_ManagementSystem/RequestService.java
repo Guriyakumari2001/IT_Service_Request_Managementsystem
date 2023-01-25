@@ -2,11 +2,13 @@ package com.LearningProject.FirstSpringbootproject.IT_Service_Request_Management
 
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.validators.RequestValidator;
 import jakarta.persistence.Id;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,38 @@ public class RequestService {
         } else {
             throw new IllegalArgumentException("Input Not Valid");
         }
+    }
+
+    public void AddExistCoustomer(RequestModel requestModel) {
+        requestModel.setStatus(Status.CLOSED);
+
+        requestRepository.save(requestModel);
+    }
+@Transactional
+public void updatecustomer(RequestModel r1) {
+    Long fetchId = r1.getId();
+    String description = r1.getRequest_details();
+    System.out.println(description);
+    boolean exist = requestRepository.existsById(fetchId);
+    if (!exist) {
+
+        System.out.println("This id does not exist");
+    } else {
+        System.out.println("this id is exist and we need to change");
+        RequestModel r2 = requestRepository.findById(fetchId)
+                .orElseThrow(() -> new RuntimeException("customer with fetchid" + fetchId + "doesnotExist"));
+        if (description != null && description.length() > 0 && !Objects.equals(description, r2.getRequest_details())) {
+            System.out.println("Now this is updating");
+            r2.setRequest_details(description);
+            System.out.println(r2.getRequest_details());
+        }
+
+
+
+
+        }
+
+
     }
 
     public void DeleteCustomername(Long id1) {

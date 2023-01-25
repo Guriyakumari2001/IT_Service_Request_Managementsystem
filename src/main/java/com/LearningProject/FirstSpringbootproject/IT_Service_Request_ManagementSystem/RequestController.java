@@ -38,6 +38,10 @@ public class RequestController {
         System.out.println("The object is calling the getstudent method");
         return requestservice.getStudent();
     }
+    @PutMapping(path="/editRequest")
+    public void updateCustomer(@RequestBody RequestModel requestModel)
+    {requestservice.updatecustomer(requestModel);
+    }
 
 
 }
