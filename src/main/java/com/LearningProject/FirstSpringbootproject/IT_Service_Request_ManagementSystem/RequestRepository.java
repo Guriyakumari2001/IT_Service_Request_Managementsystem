@@ -10,8 +10,7 @@ import java.util.Optional;
 
 @Repository
 
-public interface RequestRepository extends JpaRepository<RequestModel,Long>
-{
+public interface RequestRepository extends JpaRepository<RequestModel, Long> {
 
 
     @Override

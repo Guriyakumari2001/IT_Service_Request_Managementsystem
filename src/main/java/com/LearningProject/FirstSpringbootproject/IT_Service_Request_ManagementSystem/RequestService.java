@@ -13,6 +13,7 @@ import java.util.Optional;
 public class RequestService {
     private RequestRepository requestRepository;
     private RequestValidator requestValidator;
+
     @Autowired
     public RequestService(RequestRepository requestRepository, RequestValidator requestValidator) {
         this.requestRepository = requestRepository;
@@ -21,7 +22,7 @@ public class RequestService {
     }
 
     public void addNewCustomer(RequestModel requestModel) {
-        if(validateRequest(requestModel)) {
+        if (validateRequest(requestModel)) {
             requestModel.setStatus(Status.OPEN);
             requestRepository.save(requestModel);
             System.out.println(requestModel);
@@ -29,18 +30,16 @@ public class RequestService {
             throw new IllegalArgumentException("Input Not Valid");
         }
     }
-    public void DeleteCustomername(Long id1)
-    {
+
+    public void DeleteCustomername(Long id1) {
 
         System.out.println("Delete customer is calling");
 
-        boolean exists =requestRepository.existsById(id1);
-        if(!exists)
-        {
+        boolean exists = requestRepository.existsById(id1);
+        if (!exists) {
             System.out.println("Are id is not existing");
-            throw new IllegalArgumentException("Customerwithid"+id1+"doesnotexists");
-        }
-        else {
+            throw new IllegalArgumentException("Customerwithid" + id1 + "doesnotexists");
+        } else {
 
             System.out.println("Email exist and we can delete");
             requestRepository.deleteById(id1);
