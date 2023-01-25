@@ -56,6 +56,9 @@ public void updatecustomer(RequestModel r1) {
             r2.setRequest_details(description);
             System.out.println(r2.getRequest_details());
         }
+        else {
+            System.out.println("description has not changed" );
+        }
 
 
 
