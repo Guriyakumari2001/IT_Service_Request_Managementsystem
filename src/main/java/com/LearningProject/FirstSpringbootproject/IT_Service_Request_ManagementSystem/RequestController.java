@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 @RestController
 
-
+@Validated
 public class RequestController
 {
 
@@ -22,8 +22,14 @@ public class RequestController
         this.requestservice = requestservice;
     }
      @PostMapping("/raiseRequest")
-     public void RegisterNewCustomer(@Valid @RequestBody  RequestModel requestModel){
+     public void RegisterNewCustomer(@RequestBody  RequestModel requestModel){
        requestservice.addNewCustomer(requestModel);
+     }
+     @DeleteMapping(path="/deleteRequest/{id}")
+     public void DeleteCustomer(@PathVariable("id") Long id)
+     {
+         System.out.println("Delete the message has called");
+      requestservice.DeleteCustomername(id);
      }
     @GetMapping(path="/getRequest")
     public List<RequestModel>getStudent()
