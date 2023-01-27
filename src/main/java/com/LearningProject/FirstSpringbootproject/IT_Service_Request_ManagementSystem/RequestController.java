@@ -1,5 +1,7 @@
 package com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem;
 
+
+import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.dou.ObjectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ public class RequestController {
 
 
     private final RequestService requestservice;
+  private ObjectModel objectModel;
+
 
     @Autowired
     public RequestController(RequestService requestservice) {
@@ -22,20 +26,36 @@ public class RequestController {
 
     @PostMapping("/raiseRequest")
     public ResponseEntity<Object> RegisterNewCustomer(@RequestBody RequestModel requestModel) {
+        ObjectModel ob1 = new ObjectModel();
         try {
-            return new ResponseEntity<>(requestservice.addNewCustomer(requestModel), HttpStatus.OK);
+
+            ob1.message = "Raise request is created";
+            ob1.flag = true;
+            ob1.requestModel = requestservice.addNewCustomer(requestModel);
+            return new ResponseEntity<>(ob1, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("Error in Raise request", HttpStatus.BAD_REQUEST);
+
+            ob1.message = "Error in Raise request";
+            ob1.flag = false;
+
+            return new ResponseEntity<>(ob1, HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping(path = "/deleteRequest/{id}")
-    public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id)
+    {
+        ObjectModel ob1 = new ObjectModel();
         try {
-            return new ResponseEntity<>(requestservice.DeleteRequest(id), HttpStatus.OK);
+            ob1.message = "The customer_name of this id has deleted successfully";
+            ob1.flag = true;
+            ob1.requestModel = requestservice.DeleteRequest(id);
+            return new ResponseEntity<>(ob1, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("id does not exist", HttpStatus.BAD_REQUEST);
+            ob1.message="id does not exist";
+            ob1.flag=false;
+            return new ResponseEntity<>(ob1, HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -53,14 +73,24 @@ public class RequestController {
 
     @PutMapping(path = "/editRequest")
     public ResponseEntity<Object> EditRequest(@RequestBody RequestModel requestModel) {
+        ObjectModel EditModel=new ObjectModel();
         try {
-            return new ResponseEntity<>(requestservice.EditRequest(requestModel), HttpStatus.OK);
+            EditModel.message="Request_details has updated successfully";
+            EditModel.flag=true;
+            EditModel.requestModel=requestservice.EditRequest(requestModel);
+
+            return new ResponseEntity<>(EditModel, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("The id is not present", HttpStatus.BAD_REQUEST);
+            EditModel.message="The id is not present";
+            EditModel.flag=false;
+
+
+            return new ResponseEntity<>(EditModel, HttpStatus.BAD_REQUEST);
 
         }
 
     }
+
 
 
 }
