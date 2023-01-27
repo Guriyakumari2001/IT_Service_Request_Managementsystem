@@ -1,17 +1,21 @@
 package com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem;
-
+import org.springframework.core.annotation.Order;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.core.annotation.Order;
 
-import javax.validation.constraints.*;
+
+
 
 
 @Entity
-@Order
+
 @Table
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,7 +51,7 @@ public class RequestModel {
     @Size(min = 10, max = 10)
 
     private @Getter
-    @Setter String Phoneno;
+    @Setter String PhoneNumber;
     @NotNull
     private @Getter
     @Setter String Request_details;

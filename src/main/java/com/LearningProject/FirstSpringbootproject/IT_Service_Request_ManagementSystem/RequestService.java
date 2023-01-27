@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-//import static jdk.internal.foreign.abi.aarch64.AArch64Architecture.r2;
 
 @Service
 public class RequestService {
@@ -93,7 +92,7 @@ public class RequestService {
            }
 
            public boolean validateRequest (RequestModel requestModel){
-               return requestValidator.validateEmail(requestModel.getEmail()) && requestValidator.validatePhoneNumber(requestModel.getPhoneno());
+               return requestValidator.validateEmail(requestModel.getEmail()) && requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());
            }
 
        }
