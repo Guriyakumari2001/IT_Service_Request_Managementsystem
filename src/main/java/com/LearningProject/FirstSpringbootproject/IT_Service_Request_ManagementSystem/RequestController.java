@@ -16,7 +16,7 @@ public class RequestController {
 
 
     private final RequestService requestservice;
-  private ObjectModel objectModel;
+    private ObjectModel objectModel;
 
 
     @Autowired
@@ -44,17 +44,14 @@ public class RequestController {
     }
 
     @DeleteMapping(path = "/deleteRequest/{id}")
-    public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id)
-    {
-        ObjectModel ob1 = new ObjectModel();
+    public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {
+        ObjectModel ob1 = new ObjectModel("The customer_name of this id has deleted successfully",true, requestservice.DeleteRequest(id));
         try {
-            ob1.message = "The customer_name of this id has deleted successfully";
-            ob1.flag = true;
-            ob1.requestModel = requestservice.DeleteRequest(id);
+
             return new ResponseEntity<>(ob1, HttpStatus.OK);
         } catch (Exception e) {
-            ob1.message="id does not exist";
-            ob1.flag=false;
+            ob1.message = "id does not exist";
+            ob1.flag = false;
             return new ResponseEntity<>(ob1, HttpStatus.BAD_REQUEST);
 
         }
@@ -73,16 +70,14 @@ public class RequestController {
 
     @PutMapping(path = "/editRequest")
     public ResponseEntity<Object> EditRequest(@RequestBody RequestModel requestModel) {
-        ObjectModel EditModel=new ObjectModel();
+        ObjectModel EditModel = new ObjectModel("Request_details has updated successfully",true, requestservice.EditRequest(requestModel));
         try {
-            EditModel.message="Request_details has updated successfully";
-            EditModel.flag=true;
-            EditModel.requestModel=requestservice.EditRequest(requestModel);
+
 
             return new ResponseEntity<>(EditModel, HttpStatus.OK);
         } catch (Exception e) {
-            EditModel.message="The id is not present";
-            EditModel.flag=false;
+            EditModel.message = "The id is not present";
+            EditModel.flag = false;
 
 
             return new ResponseEntity<>(EditModel, HttpStatus.BAD_REQUEST);
@@ -90,7 +85,6 @@ public class RequestController {
         }
 
     }
-
 
 
 }

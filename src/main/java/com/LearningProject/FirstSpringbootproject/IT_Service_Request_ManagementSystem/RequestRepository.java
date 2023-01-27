@@ -19,5 +19,4 @@ public interface RequestRepository extends JpaRepository<RequestModel, Long> {
     Optional<RequestModel> findById(Long id);
 
 
-
 }
