@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 @Configuration
 public class RequestValidator {
 
-    private Pattern pattern;
-    private Matcher matcher;
+    private static Pattern pattern;
+    private static Matcher matcher;
 
     private static final String EMAIL_PATTERN =
             "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z0-9.-]+$";
@@ -18,24 +18,26 @@ public class RequestValidator {
         pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
     }
 
-    public boolean validateEmail(final String email) {
+    public static boolean   validateEmail( String email) {
         System.out.println("Validating Email: " + email);
-        if (isEmptyOrNull(email)) {
+        if ( email == null || email.equals(""))
+            {
             System.out.println("Email is null or empty");
             return false;
         }
 
-        pattern = Pattern.compile(EMAIL_PATTERN);
+
+        pattern = pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         if (matcher.matches()) {
             System.out.println("Email Pattern matched");
         } else {
-            System.out.println("Email didnt match");
+            System.out.println("Email pattern didn't match");
         }
         return matcher.matches();
     }
 
-    public boolean validatePhoneNumber(final String phoneNumber) {
+    public static boolean validatePhoneNumber(final String phoneNumber) {
         System.out.println("validating phone " + phoneNumber);
         if (isEmptyOrNull(phoneNumber)) {
             System.out.println("phone is empty or null");
@@ -53,7 +55,7 @@ public class RequestValidator {
         return (m.matches());
     }
 
-    public boolean isEmptyOrNull(String s) {
+    public static boolean isEmptyOrNull(String s) {
         if (s == null || s.equals(""))
             return true;
         return false;

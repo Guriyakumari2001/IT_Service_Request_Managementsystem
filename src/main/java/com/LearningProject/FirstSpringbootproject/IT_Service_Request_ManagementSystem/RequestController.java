@@ -2,6 +2,7 @@ package com.LearningProject.FirstSpringbootproject.IT_Service_Request_Management
 
 
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.dou.ObjectModel;
+import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.validators.RequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class RequestController {
 
     private final RequestService requestservice;
     private ObjectModel objectModel;
+    private RequestValidator requestValidator;
 
 
     @Autowired
@@ -24,24 +26,49 @@ public class RequestController {
         this.requestservice = requestservice;
     }
 
+
     @PostMapping("/raiseRequest")
     public ResponseEntity<Object> RegisterNewCustomer(@RequestBody RequestModel requestModel) {
         ObjectModel ob1 = new ObjectModel();
         try {
-
-            ob1.message = "Raise request is created";
+            ob1.message = "Your request has been successfully created.";
             ob1.flag = true;
             ob1.requestModel = requestservice.addNewCustomer(requestModel);
             return new ResponseEntity<>(ob1, HttpStatus.OK);
-
         } catch (Exception e) {
+            String getemail=requestModel.getEmail();
+            System.out.println(getemail+"This is getting email");
+            boolean validEmail=requestValidator.validateEmail(getemail);
+            System.out.println(validEmail);
 
-            ob1.message = "Error in Raise request";
+
+            boolean validatePhoneNumber=requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());
+            if(validEmail==false&&validatePhoneNumber==false)
+            {
+                System.out.println("Email & phoneNumber is invalid");
+                ob1.message = "Invalid email & phoneNumber";
+            }
+            else if(validEmail==false)
+            {
+                System.out.println("Email is invalid");
+                ob1.message="Invalid email address";
+            }
+            else if(validatePhoneNumber==false){
+                System.out.println("PhoneNumber is invalid");
+                ob1.message="Invalid PhoneNumber";
+            }
+            else{
+                System.out.println("Error is happening");
+                ob1.message="Error in raise request";
+            }
+
+
             ob1.flag = false;
-
             return new ResponseEntity<>(ob1, HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
     @DeleteMapping(path = "/deleteRequest/{id}")
     public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {

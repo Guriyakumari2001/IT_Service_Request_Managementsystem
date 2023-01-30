@@ -15,13 +15,10 @@ import java.util.Optional;
 public class RequestService {
     private RequestRepository requestRepository;
     private RequestValidator requestValidator;
-
     @Autowired
     public RequestService(RequestRepository requestRepository, RequestValidator requestValidator) {
         this.requestRepository = requestRepository;
         this.requestValidator = requestValidator;
-
-
     }
 
     public RequestModel addNewCustomer(RequestModel requestModel) {
@@ -32,12 +29,10 @@ public class RequestService {
         } else {
             throw new IllegalArgumentException("Input Not Valid");
         }
-
     }
 
     public void AddExistCoustomer(RequestModel requestModel) {
         requestModel.setStatus(Status.CLOSED);
-
         requestRepository.save(requestModel);
     }
 
@@ -48,18 +43,14 @@ public class RequestService {
         System.out.println(description);
         boolean exist = requestRepository.existsById(fetchId);
         RequestModel r2 = requestRepository.findById(fetchId)
-                .orElseThrow(() -> new RuntimeException("customer with fetchid" + fetchId + "doesnotExist"));
+                .orElseThrow(() -> new RuntimeException("customer with id" + fetchId + "does not exist"));
         if (!exist) {
-            System.out.println("This id does not exist");
-        } else {
-            System.out.println("this id is exist and we need to change");
 
+        } else {
             if (description != null && description.length() > 0 && !Objects.equals(description, r2.getRequest_details())) {
-                System.out.println("Now this is updating");
                 r2.setRequest_details(description);
                 System.out.println(r2.getRequest_details());
             } else {
-                System.out.println("description has not changed");
             }
         }
 
@@ -74,24 +65,18 @@ public class RequestService {
         boolean exists = requestRepository.existsById(id1);
         Optional<RequestModel> deleteModelbyId = requestRepository.findById(id1);
         if (!exists) {
-
             throw new IdNotFoundException("Customer with id " + id1 + "does not exist");
         } else {
-
             System.out.println("Email exist and we can delete");
-
             requestRepository.deleteById(id1);
-
         }
         return deleteModelbyId.get();
-
     }
 
 
     public List<RequestModel> getStudent() {
         return requestRepository.findAll();
     }
-
     public boolean validateRequest(RequestModel requestModel) {
         return requestValidator.validateEmail(requestModel.getEmail()) && requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());
     }
