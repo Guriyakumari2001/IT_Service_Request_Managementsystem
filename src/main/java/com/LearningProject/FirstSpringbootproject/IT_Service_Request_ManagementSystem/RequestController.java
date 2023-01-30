@@ -2,12 +2,16 @@ package com.LearningProject.FirstSpringbootproject.IT_Service_Request_Management
 
 
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.dou.ObjectModel;
+import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.exceptions.ResourceNotFoundException;
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.validators.RequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -17,6 +21,7 @@ public class RequestController {
 
 
     private final RequestService requestservice;
+
     private ObjectModel objectModel;
     private RequestValidator requestValidator;
 
@@ -67,16 +72,13 @@ public class RequestController {
     @DeleteMapping(path = "/deleteRequest/{id}")
     public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {
         ObjectModel ob1 = new ObjectModel("The request with this id is deleted ", true, requestservice.DeleteRequest(id));
-        try {
 
+            System.out.println("This id is deleted");
             return new ResponseEntity<>(ob1, HttpStatus.OK);
-        } catch (Exception e) {
-            ob1.message = "id does not exist";
-            ob1.flag = false;
-            return new ResponseEntity<>(ob1, HttpStatus.BAD_REQUEST);
 
-        }
+
     }
+
 
     @GetMapping(path = "/getRequest")
     public ResponseEntity<Object> getStudent() {
@@ -85,9 +87,11 @@ public class RequestController {
         } catch (Exception e) {
             return new ResponseEntity<>("Error in Get request", HttpStatus.BAD_REQUEST);
 
+
         }
 
     }
+
 
     @PutMapping(path = "/editRequest")
     public ResponseEntity<Object> EditRequest(@RequestBody RequestModel requestModel) {

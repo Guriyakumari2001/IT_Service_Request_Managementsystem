@@ -13,16 +13,17 @@ public class GlobalExceptionalHandler {
     //handle specific exception
     //handle global exception
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> HandleResourceNotFoundException(ResourceNotFoundException exception, WebRequest request){
-
-        ErrorDetails errorDetails=new ErrorDetails(new Date(),exception.getMessage(), request.getDescription(false));
+    public ResponseEntity<Object> HandleResourceNotFoundException(ResourceNotFoundException exception, WebRequest request) {
+        System.out.println(" Handling Exception " +  exception.getMessage());
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
+        System.out.println(request.getDescription(false));
+        System.out.println(errorDetails);
         return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
-
     }
-    @ExceptionHandler(APIException.class)
-    public ResponseEntity<?> HandleAPIException(ResourceNotFoundException exception, WebRequest request){
 
-        ErrorDetails errorDetails=new ErrorDetails(new Date(),exception.getMessage(), request.getDescription(false));
+    @ExceptionHandler(APIException.class)
+    public ResponseEntity<?> HandleAPIException(ResourceNotFoundException exception, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
         return new ResponseEntity(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }

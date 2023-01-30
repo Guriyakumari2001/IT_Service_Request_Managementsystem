@@ -58,6 +58,8 @@ public class RequestModel {
     @Enumerated(EnumType.STRING)
     private @Getter
     @Setter Status status;
+
+
 }
 
 

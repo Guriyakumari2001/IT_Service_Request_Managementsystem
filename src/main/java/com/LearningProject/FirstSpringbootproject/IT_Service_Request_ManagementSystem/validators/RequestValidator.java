@@ -1,11 +1,13 @@
 package com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.validators;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Configuration
+@Component
 public class RequestValidator {
 
     private static Pattern pattern;
