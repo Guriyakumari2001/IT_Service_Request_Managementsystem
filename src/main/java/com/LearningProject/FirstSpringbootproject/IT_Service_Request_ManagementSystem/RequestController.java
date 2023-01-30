@@ -31,35 +31,30 @@ public class RequestController {
     public ResponseEntity<Object> RegisterNewCustomer(@RequestBody RequestModel requestModel) {
         ObjectModel ob1 = new ObjectModel();
         try {
-            ob1.message = "Your request has been successfully created.";
+            ob1.message = "Your request has been created sucessfully.";
             ob1.flag = true;
             ob1.requestModel = requestservice.addNewCustomer(requestModel);
             return new ResponseEntity<>(ob1, HttpStatus.OK);
         } catch (Exception e) {
-            String getemail=requestModel.getEmail();
-            System.out.println(getemail+"This is getting email");
-            boolean validEmail=requestValidator.validateEmail(getemail);
+            String getemail = requestModel.getEmail();
+            System.out.println(getemail + "This is getting email");
+            boolean validEmail = requestValidator.validateEmail(getemail);
             System.out.println(validEmail);
 
 
-            boolean validatePhoneNumber=requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());
-            if(validEmail==false&&validatePhoneNumber==false)
-            {
+            boolean validatePhoneNumber = requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());
+            if (validEmail == false && validatePhoneNumber == false) {
                 System.out.println("Email & phoneNumber is invalid");
                 ob1.message = "Invalid email & phoneNumber";
-            }
-            else if(validEmail==false)
-            {
+            } else if (validEmail == false) {
                 System.out.println("Email is invalid");
-                ob1.message="Invalid email address";
-            }
-            else if(validatePhoneNumber==false){
+                ob1.message = "Invalid email address";
+            } else if (validatePhoneNumber == false) {
                 System.out.println("PhoneNumber is invalid");
-                ob1.message="Invalid PhoneNumber";
-            }
-            else{
+                ob1.message = "Invalid PhoneNumber";
+            } else {
                 System.out.println("Error is happening");
-                ob1.message="Error in raise request";
+                ob1.message = "Error in raise request";
             }
 
 
@@ -69,10 +64,9 @@ public class RequestController {
     }
 
 
-
     @DeleteMapping(path = "/deleteRequest/{id}")
     public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {
-        ObjectModel ob1 = new ObjectModel("The customer_name of this id has deleted successfully",true, requestservice.DeleteRequest(id));
+        ObjectModel ob1 = new ObjectModel("The request with this id is deleted ", true, requestservice.DeleteRequest(id));
         try {
 
             return new ResponseEntity<>(ob1, HttpStatus.OK);
@@ -97,7 +91,7 @@ public class RequestController {
 
     @PutMapping(path = "/editRequest")
     public ResponseEntity<Object> EditRequest(@RequestBody RequestModel requestModel) {
-        ObjectModel EditModel = new ObjectModel("Request_details has updated successfully",true, requestservice.EditRequest(requestModel));
+        ObjectModel EditModel = new ObjectModel("Request_details has updated successfully", true, requestservice.EditRequest(requestModel));
         try {
 
 

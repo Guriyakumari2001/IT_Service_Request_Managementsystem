@@ -18,10 +18,9 @@ public class RequestValidator {
         pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
     }
 
-    public static boolean   validateEmail( String email) {
+    public static boolean validateEmail(String email) {
         System.out.println("Validating Email: " + email);
-        if ( email == null || email.equals(""))
-            {
+        if (email == null || email.equals("")) {
             System.out.println("Email is null or empty");
             return false;
         }

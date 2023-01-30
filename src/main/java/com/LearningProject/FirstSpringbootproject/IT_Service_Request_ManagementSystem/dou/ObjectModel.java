@@ -12,8 +12,4 @@ public class ObjectModel {
     public String message;
     public boolean flag;
     public RequestModel requestModel;
-
-
-
-
 }
