@@ -21,39 +21,32 @@ public class RequestService {
 
 
 
-    //Todo Change the name of the function
-    public RequestModel addNewCustomer(RequestModel requestModel) {
+    public RequestModel raiseRequest(RequestModel requestModel) {
+        RequestModel savedRequestModel = null;
         if (validateRequest(requestModel)) {
             requestModel.setStatus(Status.OPEN);
-            RequestModel savedRequestModel = requestRepository.save(requestModel);
-            return savedRequestModel;
+            savedRequestModel = requestRepository.save(requestModel);
+
         } else {
-            throw new IllegalArgumentException("Input Not Valid");
+            System.out.println("Email is not valid");
         }
+        return savedRequestModel;
     }
 
-    public void AddExistCoustomer(RequestModel requestModel) {
-        requestModel.setStatus(Status.CLOSED);
-        requestRepository.save(requestModel);
-    }
+
 
     @Transactional
-    public RequestModel EditRequest(RequestModel r1) {
+    public RequestModel editRequest(RequestModel r1) {
         Long fetchId = r1.getId();
         String description = r1.getRequest_details();
-        System.out.println(description);
-        boolean exist = requestRepository.existsById(fetchId);
         RequestModel r2 = requestRepository.findById(fetchId)
                 .orElseThrow(() -> new ResourceNotFoundException("customer with id " + " " + fetchId  + " does not exist"));
-            if (description != null && description.length() > 0 && !Objects.equals(description, r2.getRequest_details())) {
                 r2.setRequest_details(description);
-                System.out.println(r2.getRequest_details());
-            }
-            return r2;
+                return r2;
 
     }
 
-    public RequestModel DeleteRequest(Long id1) {
+    public RequestModel deleteRequest(Long id1) {
         boolean exists = requestRepository.existsById(id1);
         Optional<RequestModel> deleteModelbyId = Optional.ofNullable(requestRepository.findById(id1).
                 orElseThrow(() -> new ResourceNotFoundException("Request with id " + id1 + " does not exist in db")));
@@ -64,6 +57,7 @@ public class RequestService {
 
     public List<RequestModel> getStudent() {
         return requestRepository.findAll();
+
     }
     public boolean validateRequest(RequestModel requestModel) {
         return requestValidator.validateEmail(requestModel.getEmail()) && requestValidator.validatePhoneNumber(requestModel.getPhoneNumber());

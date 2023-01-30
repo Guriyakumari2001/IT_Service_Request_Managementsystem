@@ -21,10 +21,10 @@ public class GlobalExceptionalHandler {
         return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(APIException.class)
-    public ResponseEntity<?> HandleAPIException(ResourceNotFoundException exception, WebRequest request) {
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<?> HandleInvalidEmailException(InvalidEmailException exception, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 
     }
 

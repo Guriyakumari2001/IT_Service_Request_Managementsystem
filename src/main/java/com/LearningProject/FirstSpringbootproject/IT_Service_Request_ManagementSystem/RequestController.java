@@ -1,8 +1,5 @@
 package com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem;
-
-
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.dou.ObjectModel;
-import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.exceptions.ResourceNotFoundException;
 import com.LearningProject.FirstSpringbootproject.IT_Service_Request_ManagementSystem.validators.RequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -10,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-import java.util.Optional;
+
 
 
 @RestController
@@ -33,12 +29,12 @@ public class RequestController {
 
 
     @PostMapping("/raiseRequest")
-    public ResponseEntity<Object> RegisterNewCustomer(@RequestBody RequestModel requestModel) {
+    public ResponseEntity<Object> raiseRequest(@RequestBody RequestModel requestModel) {
         ObjectModel ob1 = new ObjectModel();
         try {
-            ob1.message = "Your request has been created sucessfully.";
+            ob1.message = "Your request has been created successfully.";
             ob1.flag = true;
-            ob1.requestModel = requestservice.addNewCustomer(requestModel);
+            ob1.requestModel = requestservice.raiseRequest(requestModel);
             return new ResponseEntity<>(ob1, HttpStatus.OK);
         } catch (Exception e) {
             String getemail = requestModel.getEmail();
@@ -70,8 +66,8 @@ public class RequestController {
 
 
     @DeleteMapping(path = "/deleteRequest/{id}")
-    public ResponseEntity<Object> DeleteRequest(@PathVariable("id") Long id) {
-        ObjectModel ob1 = new ObjectModel("The request with this id is deleted ", true, requestservice.DeleteRequest(id));
+    public ResponseEntity<Object> deleteRequest(@PathVariable("id") Long id) {
+        ObjectModel ob1 = new ObjectModel("The request with this id is deleted ", true, requestservice.deleteRequest(id));
 
             System.out.println("This id is deleted");
             return new ResponseEntity<>(ob1, HttpStatus.OK);
@@ -82,20 +78,19 @@ public class RequestController {
 
     @GetMapping(path = "/getRequest")
     public ResponseEntity<Object> getStudent() {
-        try {
+
             return new ResponseEntity<>(requestservice.getStudent(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error in Get request", HttpStatus.BAD_REQUEST);
 
 
-        }
+
+
 
     }
 
 
     @PutMapping(path = "/editRequest")
-    public ResponseEntity<Object> EditRequest(@RequestBody RequestModel requestModel) {
-        ObjectModel EditModel = new ObjectModel("Request_details has updated successfully", true, requestservice.EditRequest(requestModel));
+    public ResponseEntity<Object> editRequest(@RequestBody RequestModel requestModel) {
+        ObjectModel EditModel = new ObjectModel("Request_details has updated successfully", true, requestservice.editRequest(requestModel));
         try {
 
 
