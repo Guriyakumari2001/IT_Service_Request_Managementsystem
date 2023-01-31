@@ -19,15 +19,12 @@ public class RequestValidator {
     public RequestValidator() {
         pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
     }
-
     public static boolean validateEmail(String email) {
         System.out.println("Validating Email: " + email);
         if (email == null || email.equals("")) {
             System.out.println("Email is null or empty");
             return false;
         }
-
-
         pattern = pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         if (matcher.matches()) {

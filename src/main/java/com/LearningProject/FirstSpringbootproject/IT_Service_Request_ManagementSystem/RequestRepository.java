@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface RequestRepository extends JpaRepository<RequestModel, Long> {
     RequestModel findFirstBy();
 
-
     @Override
     Optional<RequestModel> findById(Long id);
 

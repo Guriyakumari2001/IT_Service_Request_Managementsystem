@@ -10,8 +10,6 @@ import java.util.Date;
 
 @ControllerAdvice
 public class GlobalExceptionalHandler {
-    //handle specific exception
-    //handle global exception
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> HandleResourceNotFoundException(ResourceNotFoundException exception, WebRequest request) {
         System.out.println(" Handling Exception " +  exception.getMessage());
@@ -20,9 +18,13 @@ public class GlobalExceptionalHandler {
         System.out.println(errorDetails);
         return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(InvalidEmailException.class)
     public ResponseEntity<?> HandleInvalidEmailException(InvalidEmailException exception, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+
+    }@ExceptionHandler(InvalidPhoneNumberException.class)
+    public ResponseEntity<?> HandleInvalidPhoneNumberException(InvalidPhoneNumberException exception, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 

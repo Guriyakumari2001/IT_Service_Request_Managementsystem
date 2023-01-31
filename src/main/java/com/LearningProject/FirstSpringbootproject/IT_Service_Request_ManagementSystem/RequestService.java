@@ -18,23 +18,16 @@ import java.util.Optional;
 public class RequestService {
     private RequestRepository requestRepository;
     private RequestValidator requestValidator;
-
-
-
     public RequestModel raiseRequest(RequestModel requestModel) {
         RequestModel savedRequestModel = null;
         if (validateRequest(requestModel)) {
             requestModel.setStatus(Status.OPEN);
             savedRequestModel = requestRepository.save(requestModel);
-
         } else {
             System.out.println("Email is not valid");
         }
         return savedRequestModel;
     }
-
-
-
     @Transactional
     public RequestModel editRequest(RequestModel r1) {
         Long fetchId = r1.getId();
@@ -43,7 +36,6 @@ public class RequestService {
                 .orElseThrow(() -> new ResourceNotFoundException("customer with id " + " " + fetchId  + " does not exist"));
                 r2.setRequest_details(description);
                 return r2;
-
     }
 
     public RequestModel deleteRequest(Long id1) {
